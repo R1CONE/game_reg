@@ -19,8 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Prepare SQL statement to check if the nickname already exists
     $stmt = $conn->prepare("SELECT * FROM accounts WHERE nickname = ?");
