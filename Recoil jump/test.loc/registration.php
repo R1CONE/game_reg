@@ -41,8 +41,8 @@
 
 <div class="registration-container">
 <?php
-    // Check if there is an error message in the URL
-    if ($error_nick_exist = $_GET['error_nick_exist']) {
+    $error_nick_exist = isset($_GET['error_nick_exist']) ? $_GET['error_nick_exist'] : null;
+    if ($error_nick_exist !== null) {
         echo $error_nick_exist;
     }
 ?>
@@ -63,3 +63,4 @@
 
 </body>
 </html>
+
