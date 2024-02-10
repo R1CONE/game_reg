@@ -46,6 +46,12 @@
         echo $error_nick_exist;
     }
 ?>
+<?php
+    $error_email_exist = isset($_GET['error_email_exist']) ? $_GET['error_email_exist'] : null;
+    if ($error_email_exist !== null) {
+        echo $error_email_exist;
+    }
+?>
     <form action = "index.php" method="post">
         <div class="input-group">
             <input type="text" name="nickname" placeholder="Nick-name">
