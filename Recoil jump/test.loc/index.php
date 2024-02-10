@@ -26,11 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
 
+    $stmt_1 = $conn->prepare("SELECT * FROM accounts WHERE email = ?");
+    $stmt_1->bind_param("s", $email);
+    $stmt_1->execute();
+    $result_1 = $stmt_1->get_result();
+
     if ($result->num_rows > 0) {
     $error_nick_exist = "nick is exist";
     header("Location: registration.php?error_nick_exist=$error_nick_exist");
     exit;
-    } else {
+    } 
+    
+    if ($result_1->num_rows > 0) {
+    $error_email_exist = "email is exist";
+    header("Location: registration.php?error_email_exist=$error_email_exist");
+    exit;
+    }
+    
+    else {
         // Prepare and bind SQL statement for inserting new user
         $stmt = $conn->prepare("INSERT INTO accounts (nickname, email, password) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $nickname, $email, $hashed_password);
