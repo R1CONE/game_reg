@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$dbPassword = ""; // Change this to your actual database password
+$dbPassword = ""; 
 $database = "recjump_data_baze";
 
 // Create connection
@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reg_account'])) {
     // Get form data
     $nickname = $_POST['nickname'];
     $email = $_POST['email'];
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else {
         // Prepare and bind SQL statement for inserting new user
         $stmt = $conn->prepare("INSERT INTO accounts (nickname, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $nickname, $email, $hashed_password);
+        $stmt->bind_param("sss", $nickname, $email, $password);
 
         // Execute the statement
         if ($stmt->execute() === TRUE) {
@@ -56,9 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: " . $stmt->error;
         }
     }
-
     // Close statement
     $stmt->close();
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['have_account'])) {
+
+    header("Location: enter.php");
+
 }
 
 // Close connection
