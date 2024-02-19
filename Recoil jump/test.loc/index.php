@@ -32,32 +32,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result_1 = $stmt_1->get_result();
 
         if ($result->num_rows > 0) {
-            $error_nick_exist = "nick is exist";
+            $error_nick_exist = "Nick is already taken.";
             header("Location: registration.php?error_nick_exist=$error_nick_exist");
             exit;
         } 
         
         if ($result_1->num_rows > 0) {
-            $error_email_exist = "email is exist";
+            $error_email_exist = "Email is already registered.";
             header("Location: registration.php?error_email_exist=$error_email_exist");
             exit;
         }
         
-        else {
-            // Prepare and bind SQL statement for inserting new user
-            $stmt = $conn->prepare("INSERT INTO accounts (nickname, email, password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $nickname, $email, $password);
-
-            // Execute the statement
-            if ($stmt->execute() === TRUE) {
-                echo "Registration successful.";
-            } else {
-                header('Location: registration.html');
-                echo "Error: " . $stmt->error;
-            }
-        }
         // Close statement
         $stmt->close();
+        $stmt_1->close();
+        
+        // Prepare and bind SQL statement for inserting new user
+        $stmt = $conn->prepare("INSERT INTO accounts (nickname, email, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $nickname, $email, $password);
+
+        // Execute the statement
+        if ($stmt->execute() === TRUE) {
+            echo "Registration successful.";
+        } else {
+            header('Location: registration.php');
+            exit;
+        }
     } elseif (isset($_POST['have_account'])) {
         header("Location: enter.php");
         exit;
@@ -66,11 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Close connection
 $conn->close();
-
-// Redirect user
-header('Location: connect.php');
-exit; // Ensure that script execution stops after redirect
-?>
 
 // Redirect user
 header('Location: connect.php');
