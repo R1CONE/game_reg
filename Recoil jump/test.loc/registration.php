@@ -52,7 +52,7 @@
         echo $error_email_exist;
     }
 ?>
-    <form action = "index.php" method="post">
+    <form action="index.php" method="post">
         <div class="input-group">
             <input type="text" name="nickname" placeholder="Nick-name">
         </div>
@@ -62,8 +62,10 @@
         <div class="input-group">
             <input type="password" name="password" placeholder="Password">
         </div>
-        <button type="submit">Reg account</button>
-        <button type="create_ac">I have account</button>
+        <button type="submit" name="reg_account">Reg account</button>
+        <form action="enter.php" method="post">
+        <button type="submit" name="have_account">I have account</button>
+        </form>
     </form>
 </div>
 
